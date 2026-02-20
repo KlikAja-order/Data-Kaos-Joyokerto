@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trah Joyokerto | Pendataan Kaos Modern</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root { font-family: 'Plus Jakarta Sans', sans-serif; }
+    body { background-color: #fcfdfe; color: #0f172a; }
+    
+    .glass-morphism {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+    }
+
+    .form-input-focus {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .form-input-focus:focus {
+      border-color: #6366f1;
+      box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+      transform: translateY(-1px);
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #4f46e5 0%, #9333ea 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .floating-card {
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
+    }
+
+    .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+  </style>
+</head>
+<body class="antialiased">
+
+  <nav class="sticky top-0 z-40 glass-morphism py-4 px-6">
+    <div class="max-w-4xl mx-auto flex justify-between items-center">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold">TJ</div>
+        <span class="font-bold text-slate-800 tracking-tight">Trah Joyokerto</span>
+      </div>
+      <div class="text-xs font-bold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full uppercase tracking-tighter">Form 2026</div>
+    </div>
+  </nav>
+
+  <main class="max-w-3xl mx-auto px-4 py-12">
+    <div class="text-center mb-12">
+      <h1 class="text-4xl md:text-5xl font-extrabold mb-4 tracking-tight text-slate-900">
+        Konfirmasi <span class="gradient-text">Kaos Keluarga</span>
+      </h1>
+      <p class="text-slate-500 text-lg max-w-lg mx-auto leading-relaxed italic">
+        "Ngumpulake balung pisah, nyambung paseduluran."
+      </p>
+    </div>
+
+    <form id="orderForm" class="space-y-10">
+      <section class="bg-white rounded-3xl p-6 md:p-10 floating-card border border-slate-50">
+        <div class="flex items-center gap-4 mb-8">
+          <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold">01</div>
+          <h2 class="text-2xl font-bold text-slate-800">Data Utama</h2>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="space-y-2">
+            <label class="text-sm font-bold text-slate-700 ml-1">Nama Pemesan</label>
+            <input type="text" id="namaPemesan" placeholder="Nama Lengkap" required
+                   class="form-input-focus w-full rounded-2xl bg-slate-50 border-slate-200 px-5 py-4 text-slate-900">
+          </div>
+          <div class="space-y-2">
+            <label class="text-sm font-bold text-slate-700 ml-1">WhatsApp</label>
+            <input type="tel" id="noHp" placeholder="08xxxxxxxx" required
+                   class="form-input-focus w-full rounded-2xl bg-slate-50 border-slate-200 px-5 py-4 text-slate-900">
+          </div>
+        </div>
+        
+        <div class="mt-6 space-y-2">
+          <label class="text-sm font-bold text-slate-700 ml-1">Jumlah Pesanan</label>
+          <select id="jumlahKaos" required class="form-input-focus w-full rounded-2xl bg-slate-50 border-slate-200 px-5 py-4 text-slate-900 appearance-none cursor-pointer">
+            <option value="">-- Pilih Jumlah --</option>
+            <script>for (let i = 1; i <= 20; i++) { document.write(`<option value="${i}">${i} Kaos</option>`); }</script>
+          </select>
+        </div>
+      </section>
+
+      <div id="detailSection" class="hidden animate-in fade-in slide-in-from-bottom-4 duration-500">
+        <div class="flex items-center gap-4 mb-8 px-2">
+          <div class="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center font-bold">02</div>
+          <h2 class="text-2xl font-bold text-slate-800">Detail Per Kaos</h2>
+        </div>
+        <div id="detailContainer" class="space-y-6"></div>
+      </div>
+
+      <button type="submit" class="w-full bg-slate-900 hover:bg-indigo-600 text-white font-bold py-5 rounded-3xl shadow-xl transition-all duration-300 active:scale-[0.98] flex items-center justify-center gap-3">
+        <span>KIRIM PESANAN</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+        </svg>
+      </button>
+    </form>
+  </main>
+
+  <div id="reviewOverlay" class="fixed inset-0 bg-slate-900/60 hidden backdrop-blur-md z-[50]"></div>
+  <div id="reviewModal" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] max-w-lg bg-white rounded-[32px] overflow-hidden shadow-2xl z-[51] hidden flex flex-col max-h-[90vh]">
+    <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50">
+      <h3 class="font-extrabold text-xl text-slate-800">Ringkasan Pesanan</h3>
+      <button onclick="toggleReview(false)" class="text-slate-400 hover:text-slate-600">✕</button>
+    </div>
+    
+    <div class="p-6 overflow-y-auto custom-scrollbar flex-grow">
+      <div id="reviewContent" class="space-y-4">
+        </div>
+    </div>
+
+    <div class="p-6 border-t border-slate-100 bg-white space-y-3">
+      <button id="confirmBtn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 rounded-2xl shadow-lg shadow-indigo-100 transition-all flex items-center justify-center gap-2">
+        KONFIRMASI & KIRIM
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" /></svg>
+      </button>
+      <button onclick="toggleReview(false)" class="w-full text-slate-500 font-semibold py-2 text-sm hover:text-slate-800">Kembali Edit Data</button>
+    </div>
+  </div>
+
+  <div id="successOverlay" class="fixed inset-0 bg-slate-900/40 hidden backdrop-blur-md z-[100]"></div>
+  <div id="successModal" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-sm bg-white rounded-[40px] p-10 text-center shadow-2xl z-[101] hidden">
+    <div class="w-20 h-20 bg-green-50 text-green-500 rounded-full flex items-center justify-center text-4xl mx-auto mb-6">✓</div>
+    <h3 class="text-2xl font-extrabold text-slate-900 mb-2">Sukses!</h3>
+    <p class="text-slate-500 mb-8 text-sm">Maturnuwun, data sampun mlebet wonten ing database.</p>
+    <button onclick="location.reload()" class="w-full bg-slate-900 text-white font-bold py-4 rounded-2xl">Selesai</button>
+  </div>
+
+  <div id="loading" class="fixed inset-0 bg-white/90 hidden z-[200] flex flex-col items-center justify-center text-center p-6">
+    <div class="w-12 h-12 border-4 border-indigo-100 border-t-indigo-600 rounded-full animate-spin mb-4"></div>
+    <p class="text-slate-900 font-bold tracking-tight">Sedang mengirim data...<br><span class="text-slate-400 font-normal text-sm">Mohon tunggu sebentar</span></p>
+  </div>
+
+  <script>
+    const jumlahSelect = document.getElementById('jumlahKaos');
+    const detailContainer = document.getElementById('detailContainer');
+    const detailSection = document.getElementById('detailSection');
+    const orderForm = document.getElementById('orderForm');
+    const reviewContent = document.getElementById('reviewContent');
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/PASTE_URL_ANDA/exec';
+
+    let currentData = [];
+
+    jumlahSelect.addEventListener('change', function() {
+      const jumlah = parseInt(this.value);
+      if (isNaN(jumlah)) { detailSection.classList.add('hidden'); return; }
+      detailSection.classList.remove('hidden');
+      
+      let html = '';
+      for (let i = 0; i < jumlah; i++) {
+        html += `
+          <div class="bg-white rounded-3xl p-6 md:p-8 floating-card border border-slate-50 space-y-5">
+            <h3 class="font-bold text-slate-800 flex items-center gap-2">
+                <span class="w-6 h-6 bg-indigo-600 text-white text-[10px] flex items-center justify-center rounded-full italic">#${i+1}</span>
+                Item Kaos
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="md:col-span-2 space-y-1">
+                <label class="text-[11px] font-bold text-slate-400 uppercase ml-1">Nama Penerima</label>
+                <input type="text" name="penerima_${i}" placeholder="Contoh: Pak De Joyo" required class="form-input-focus w-full bg-slate-50 rounded-xl px-4 py-3 text-slate-900 border-transparent">
+              </div>
+              <div class="space-y-1">
+                <label class="text-[11px] font-bold text-slate-400 uppercase ml-1">Kategori</label>
+                <select name="kategori_${i}" required class="form-input-focus w-full bg-slate-50 rounded-xl px-4 py-3 outline-none border-transparent cursor-pointer">
+                  <option value="Dewasa">Dewasa</option><option value="Anak">Anak-anak</option>
+                </select>
+              </div>
+              <div class="space-y-1">
+                <label class="text-[11px] font-bold text-slate-400 uppercase ml-1">Ukuran</label>
+                <select name="ukuran_${i}" required class="form-input-focus w-full bg-slate-50 rounded-xl px-4 py-3 outline-none border-transparent cursor-pointer">
+                    <option value="S">S</option><option value="M">M</option><option value="L">L</option><option value="XL">XL</option><option value="XXL">XXL</option><option value="3XL">3XL</option>
+                </select>
+              </div>
+              <div class="space-y-1">
+                <label class="text-[11px] font-bold text-slate-400 uppercase ml-1">Model & Lengan</label>
+                <div class="flex gap-2">
+                    <select name="model_${i}" class="form-input-focus flex-1 bg-slate-50 rounded-xl px-3 py-3 text-sm border-transparent"><option value="Cowok">Cowok</option><option value="Cewek">Cewek</option></select>
+                    <select name="lengan_${i}" class="form-input-focus flex-1 bg-slate-50 rounded-xl px-3 py-3 text-sm border-transparent"><option value="Pendek">Pendek</option><option value="Panjang">Panjang</option></select>
+                </div>
+              </div>
+            </div>
+          </div>`;
+      }
+      detailContainer.innerHTML = html;
+    });
+
+    function toggleReview(show) {
+      document.getElementById('reviewOverlay').classList.toggle('hidden', !show);
+      document.getElementById('reviewModal').classList.toggle('hidden', !show);
+    }
+
+    orderForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const namaPemesan = document.getElementById('namaPemesan').value;
+      const noHp = document.getElementById('noHp').value;
+      const jumlah = parseInt(jumlahSelect.value);
+
+      currentData = [];
+      let summaryHtml = `
+        <div class="bg-indigo-50 p-4 rounded-2xl mb-6">
+            <p class="text-xs text-indigo-400 font-bold uppercase mb-1 tracking-widest">Informasi Utama</p>
+            <p class="text-slate-800 font-bold text-lg">${namaPemesan}</p>
+            <p class="text-slate-500 text-sm">${noHp} • ${jumlah} Kaos</p>
+        </div>
+        <p class="text-[11px] font-extrabold text-slate-400 uppercase tracking-widest ml-1">Detail Produksi:</p>
+      `;
+
+      for (let i = 0; i < jumlah; i++) {
+        const item = {
+          nama_pemesan: namaPemesan, no_hp: noHp,
+          nama_penerima: document.querySelector(`[name="penerima_${i}"]`).value,
+          kategori: document.querySelector(`[name="kategori_${i}"]`).value,
+          ukuran: document.querySelector(`[name="ukuran_${i}"]`).value,
+          model: document.querySelector(`[name="model_${i}"]`).value,
+          lengan: document.querySelector(`[name="lengan_${i}"]`).value
+        };
+        currentData.push(item);
+        summaryHtml += `
+          <div class="bg-white border border-slate-100 p-4 rounded-2xl flex justify-between items-center shadow-sm">
+            <div>
+                <p class="font-bold text-slate-800 text-sm">${item.nama_penerima}</p>
+                <p class="text-xs text-slate-500">${item.kategori} • Size ${item.ukuran}</p>
+            </div>
+            <div class="text-right">
+                <span class="text-[10px] font-bold bg-slate-100 px-2 py-1 rounded-md text-slate-600 uppercase">${item.model}</span>
+                <span class="text-[10px] font-bold bg-slate-100 px-2 py-1 rounded-md text-slate-600 uppercase ml-1">${item.lengan}</span>
+            </div>
+          </div>`;
+      }
+      reviewContent.innerHTML = summaryHtml;
+      toggleReview(true);
+    });
+
+    document.getElementById('confirmBtn').addEventListener('click', async function() {
+      toggleReview(false);
+      document.getElementById('loading').classList.remove('hidden');
+
+      try {
+        await fetch(APPS_SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(currentData) });
+        document.getElementById('loading').classList.add('hidden');
+        document.getElementById('successOverlay').classList.remove('hidden');
+        document.getElementById('successModal').classList.remove('hidden');
+      } catch (error) {
+        alert('Gagal mengirim data. Coba cek internet Anda.');
+        document.getElementById('loading').classList.add('hidden');
+      }
+    });
+  </script>
+</body>
+</html>
