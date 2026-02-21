@@ -244,42 +244,20 @@
       toggleReview(true);
     });
 
-    document.getElementById('confirmBtn').addEventListener('click', function() {
-    toggleReview(false);
-    document.getElementById('loading').classList.remove('hidden');
+    document.getElementById('confirmBtn').addEventListener('click', async function() {
+      toggleReview(false);
+      document.getElementById('loading').classList.remove('hidden');
 
-    const xhr = new XMLHttpRequest();
-    xhr.open("POST", APPS_SCRIPT_URL);
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-            // Apapun responnya (bahkan jika error CORS di konsol), 
-            // jika status 200/0 biasanya data tetap masuk ke Google
-            document.getElementById('loading').classList.add('hidden');
-            document.getElementById('successOverlay').classList.remove('hidden');
-            document.getElementById('successModal').classList.remove('hidden');
-        }
-    };
-
-    xhr.send(JSON.stringify(currentData));
-});
-
-    // Karena Google Script redirect, kita biasanya tidak bisa baca body-nya 
-    // jika sukses tanpa cors, tapi datanya TETAP masuk.
-    document.getElementById('loading').classList.add('hidden');
-    document.getElementById('successOverlay').classList.remove('hidden');
-    document.getElementById('successModal').classList.remove('hidden');
-    
-  } catch (error) {
-    console.error('Error:', error);
-    alert('Terjadi kesalahan teknis. Namun, silakan cek Spreadsheet Anda beberapa saat lagi.');
-    document.getElementById('loading').classList.add('hidden');
-  }
-});
+      try {
+        await fetch(APPS_SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(currentData) });
+        document.getElementById('loading').classList.add('hidden');
+        document.getElementById('successOverlay').classList.remove('hidden');
+        document.getElementById('successModal').classList.remove('hidden');
+      } catch (error) {
+        alert('Gagal mengirim data. Coba cek internet Anda.');
+        document.getElementById('loading').classList.add('hidden');
+      }
+    });
   </script>
 </body>
 </html>
-
-
-
-
-
