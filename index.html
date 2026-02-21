@@ -150,7 +150,7 @@
     const detailSection = document.getElementById('detailSection');
     const orderForm = document.getElementById('orderForm');
     const reviewContent = document.getElementById('reviewContent');
-    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzlQfmm_XR1gdUYNas8NMwTtI0RWbrquDVIdFFNkUZDDc-laxlmlu5hjHoqp_PBmG49kQ/exec';
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwbALXqyYEG_zf3vqRdhywJSA_WAvOo7AKpvlBmNivX1khkAkiDk8ypY63dna7U6ddysA/exec';
 
     let currentData = [];
 
@@ -245,21 +245,33 @@
     });
 
     document.getElementById('confirmBtn').addEventListener('click', async function() {
-      toggleReview(false);
-      document.getElementById('loading').classList.remove('hidden');
+  toggleReview(false);
+  document.getElementById('loading').classList.remove('hidden');
 
-      try {
-        await fetch(APPS_SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(currentData) });
-        document.getElementById('loading').classList.add('hidden');
-        document.getElementById('successOverlay').classList.remove('hidden');
-        document.getElementById('successModal').classList.remove('hidden');
-      } catch (error) {
-        alert('Gagal mengirim data. Coba cek internet Anda.');
-        document.getElementById('loading').classList.add('hidden');
-      }
+  try {
+    const response = await fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      body: JSON.stringify(currentData),
+      headers: {
+        'Content-Type': 'text/plain;charset=utf-8', // Gunakan text/plain agar tidak memicu preflight CORS
+      },
     });
+
+    // Karena Google Script redirect, kita biasanya tidak bisa baca body-nya 
+    // jika sukses tanpa cors, tapi datanya TETAP masuk.
+    document.getElementById('loading').classList.add('hidden');
+    document.getElementById('successOverlay').classList.remove('hidden');
+    document.getElementById('successModal').classList.remove('hidden');
+    
+  } catch (error) {
+    console.error('Error:', error);
+    alert('Terjadi kesalahan teknis. Namun, silakan cek Spreadsheet Anda beberapa saat lagi.');
+    document.getElementById('loading').classList.add('hidden');
+  }
+});
   </script>
 </body>
 </html>
+
 
 
